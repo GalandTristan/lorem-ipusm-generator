@@ -6,6 +6,7 @@ const choix = document.querySelector("select");
 const contenu = document.querySelector(".content");
 
 let copy = "";
+
 const setText = () => {
   const selector = document.querySelectorAll("option");
   if (number.value <= 1 && number.value) {
@@ -23,8 +24,9 @@ const setText = () => {
 const getLorem = (amount, option) => {
   setText();
   contenu.innerHTML = "";
-  let texte;
+  let texte = [];
   let rendu = "";
+  ////////////////////////////////////////////////////////
   switch (option) {
     case "1": //mots
       texte = lorem.split(" ");
@@ -49,20 +51,28 @@ const getLorem = (amount, option) => {
 
       contenu.appendChild(paragraphe);
       break;
+    ////////////////////////////////////////////////////////
     case "2": // phrase
-      texte = lorem.split(".");
+      lorem.split(".").forEach((elt, index) => {
+        if (elt.trim() != "\n" && elt.trim() != "") {
+          texte[index] = elt.trim();
+          console.log(texte[index]);
+        }
+      });
       for (let index = 0; index < amount; index++) {
         if (texte[index]) {
           let phrase = texte[index];
-          rendu = rendu + phrase + ".";
+          rendu = rendu + phrase + ". ";
         } else {
-          rendu = rendu + texte[Math.floor(Math.random() * texte.length)] + ".";
+          rendu =
+            rendu + texte[Math.floor(Math.random() * texte.length)] + ". ";
         }
       }
       const phrases = document.createElement("p");
       phrases.textContent = rendu;
       contenu.appendChild(phrases);
       break;
+    ////////////////////////////////////////////////////////
     case "3": //paragraphe
       texte = lorem.split("\n");
       for (let index = 0; index < amount; index++) {
@@ -78,6 +88,7 @@ const getLorem = (amount, option) => {
         contenu.appendChild(p);
       }
       break;
+    ////////////////////////////////////////////////////////
     case "4": // liste
       texte = lorem.split(".");
       const ul = document.createElement("ul");
@@ -102,8 +113,10 @@ const getLorem = (amount, option) => {
     default:
       break;
   }
-  copy = rendu;
+  copy = rendu; //Clipboard
 };
+
+//Set event listeners
 
 number.addEventListener("input", () => {
   getLorem(number.value, choix.value);
