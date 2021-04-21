@@ -26,7 +26,7 @@ const getLorem = (amount, option) => {
   let texte;
   let rendu = "";
   switch (option) {
-    case "1":
+    case "1": //mots
       texte = lorem.split(" ");
       for (let index = 0; index < amount; index++) {
         let mot = texte[index];
@@ -49,7 +49,7 @@ const getLorem = (amount, option) => {
 
       contenu.appendChild(paragraphe);
       break;
-    case "2":
+    case "2": // phrase
       texte = lorem.split(".");
       for (let index = 0; index < amount; index++) {
         if (texte[index]) {
@@ -63,7 +63,7 @@ const getLorem = (amount, option) => {
       phrases.textContent = rendu;
       contenu.appendChild(phrases);
       break;
-    case "3":
+    case "3": //paragraphe
       texte = lorem.split("\n");
       for (let index = 0; index < amount; index++) {
         let p = document.createElement("p");
@@ -78,7 +78,7 @@ const getLorem = (amount, option) => {
         contenu.appendChild(p);
       }
       break;
-    case "4":
+    case "4": // liste
       texte = lorem.split(".");
       const ul = document.createElement("ul");
       for (let index = 0; index < amount; index++) {
@@ -89,13 +89,14 @@ const getLorem = (amount, option) => {
         } else {
           ligne = texte[Math.floor(Math.random() * texte.length)];
         }
-        ligne = ligne.trim()
-        if(ligne != ""){
-        rendu = rendu + ligne + "\n";
-        li.textContent = ligne;
-        ul.appendChild(li);
+        ligne = ligne.trim();
+        if (ligne != "") {
+          rendu = rendu + "\n- " + ligne;
+          li.textContent = ligne;
+          ul.appendChild(li);
         }
       }
+      rendu = rendu.substring(1);
       contenu.appendChild(ul);
       break;
     default:
