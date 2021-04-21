@@ -3,20 +3,24 @@ const lorem =
 const bouton = document.querySelector(".oui");
 const number = document.querySelector("input");
 const choix = document.querySelector("select");
-const contenu = document.querySelector(".content")
+const contenu = document.querySelector(".content");
 
-let copy =""
+let copy = "";
 
 const getLorem = (amount, option) => {
   contenu.innerHTML = "";
   let texte;
-  let rendu = ""
+  let rendu = "";
   switch (option) {
     case "1":
       texte = lorem.split(" ");
       for (let index = 0; index < amount; index++) {
         let mot = texte[index];
-        rendu = rendu + " " + mot;
+        if (mot) {
+          rendu = rendu + " " + mot;
+        } else {
+          rendu = rendu + " " + texte[Math.floor(Math.random() * texte.length)];
+        }
       }
       if (rendu.charAt(rendu.length - 1) == ",") {
         rendu = rendu.slice(0, -1);
@@ -28,32 +32,41 @@ const getLorem = (amount, option) => {
 
       const paragraphe = document.createElement("p");
       paragraphe.textContent = rendu;
-      
+
       contenu.appendChild(paragraphe);
       break;
     case "2":
       texte = lorem.split(".");
       for (let index = 0; index < amount; index++) {
-        let phrase = texte[index];
-        rendu = rendu + phrase + ".";
+        if (texte[index]) {
+          let phrase = texte[index];
+          rendu = rendu + phrase + ".";
+        } else {
+          rendu = rendu + texte[Math.floor(Math.random() * texte.length)] + ".";
+        }
       }
-      const phrases = document.createElement("p")
-      phrases.textContent = rendu
-      contenu.appendChild(phrases)
+      const phrases = document.createElement("p");
+      phrases.textContent = rendu;
+      contenu.appendChild(phrases);
       break;
     case "3":
-        texte = lorem.split("\n");
+      texte = lorem.split("\n");
       for (let index = 0; index < amount; index++) {
-        let p = document.createElement("p")
-        rendu = rendu + texte[index] + "\n"
-        p.textContent = texte[index]
-        contenu.appendChild(p)
+        let p = document.createElement("p");
+        if (texte[index]) {
+          rendu = rendu + texte[index] + "\n";
+          p.textContent = texte[index];
+        }else{
+            rendu = rendu + texte[Math.floor(Math.random() * texte.length)] + "\n"
+            p.textContent = texte[Math.floor(Math.random() * texte.length)]
+        }
+        contenu.appendChild(p);
       }
       break;
     default:
       break;
   }
-  copy = rendu
+  copy = rendu;
 };
 
 number.addEventListener("input", () => {
@@ -64,8 +77,8 @@ choix.addEventListener("input", () => {
   getLorem(number.value, choix.value);
 });
 
-bouton.addEventListener("click",()=>{
-    navigator.clipboard.writeText(copy) 
-})
+bouton.addEventListener("click", () => {
+  navigator.clipboard.writeText(copy);
+});
 
-window.onload(getLorem(number.value, choix.value))
+window.onload(getLorem(number.value, choix.value));
