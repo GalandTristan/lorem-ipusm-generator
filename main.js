@@ -6,8 +6,22 @@ const choix = document.querySelector("select");
 const contenu = document.querySelector(".content");
 
 let copy = "";
-
+const setText = () => {
+  const selector = document.querySelectorAll("option");
+  if (number.value <= 1 && number.value) {
+    selector[0].textContent = "mot";
+    selector[1].textContent = "phrase";
+    selector[2].textContent = "paragraphe";
+    selector[3].textContent = "ligne de liste";
+  } else {
+    selector[0].textContent = "mots";
+    selector[1].textContent = "phrases";
+    selector[2].textContent = "paragraphes";
+    selector[3].textContent = "lignes de liste";
+  }
+};
 const getLorem = (amount, option) => {
+  setText();
   contenu.innerHTML = "";
   let texte;
   let rendu = "";
@@ -56,12 +70,33 @@ const getLorem = (amount, option) => {
         if (texte[index]) {
           rendu = rendu + texte[index] + "\n";
           p.textContent = texte[index];
-        }else{
-            rendu = rendu + texte[Math.floor(Math.random() * texte.length)] + "\n"
-            p.textContent = texte[Math.floor(Math.random() * texte.length)]
+        } else {
+          rendu =
+            rendu + texte[Math.floor(Math.random() * texte.length)] + "\n";
+          p.textContent = texte[Math.floor(Math.random() * texte.length)];
         }
         contenu.appendChild(p);
       }
+      break;
+    case "4":
+      texte = lorem.split(".");
+      const ul = document.createElement("ul");
+      for (let index = 0; index < amount; index++) {
+        let li = document.createElement("li");
+        let ligne = "";
+        if (texte[index]) {
+          ligne = texte[index];
+        } else {
+          ligne = texte[Math.floor(Math.random() * texte.length)];
+        }
+        ligne = ligne.trim()
+        if(ligne != ""){
+        rendu = rendu + ligne + "\n";
+        li.textContent = ligne;
+        ul.appendChild(li);
+        }
+      }
+      contenu.appendChild(ul);
       break;
     default:
       break;
@@ -81,4 +116,4 @@ bouton.addEventListener("click", () => {
   navigator.clipboard.writeText(copy);
 });
 
-window.onload(getLorem(number.value, choix.value));
+getLorem(number.value, choix.value);
