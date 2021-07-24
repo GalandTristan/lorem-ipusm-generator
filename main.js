@@ -56,7 +56,6 @@ const getLorem = (amount, option) => {
       lorem.split(".").forEach((elt, index) => {
         if (elt.trim() != "\n" && elt.trim() != "") {
           texte[index] = elt.trim();
-          console.log(texte[index]);
         }
       });
       for (let index = 0; index < amount; index++) {
@@ -119,6 +118,9 @@ const getLorem = (amount, option) => {
 //Set event listeners
 
 number.addEventListener("input", () => {
+  if(parseInt(number.value) <= 1){
+    number.value = 1
+  }
   getLorem(number.value, choix.value);
 });
 
