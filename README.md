@@ -1,4 +1,4 @@
-[Lorem Ipsum](screenshot.webp)
+![Lorem Ipsum](screenshot.webp)
 
 # Lorem Ipsum generator
 
